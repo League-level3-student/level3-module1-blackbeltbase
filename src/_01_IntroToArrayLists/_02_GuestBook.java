@@ -1,4 +1,4 @@
-package _01_Intro_To_Array_Lists;
+package _01_IntroToArrayLists;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
