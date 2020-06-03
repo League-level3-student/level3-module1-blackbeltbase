@@ -28,7 +28,7 @@ public class _05_LongChipCompetition {
 				}
 			}
 		}
-		System.out.println(beatleName+" has the longest chip.");
+		System.out.println(beatleName+" has the longest chip, measuring at a length of "+longestChip+" centimeters.");
 	}
 	
 	private void initializeBeatles() {
