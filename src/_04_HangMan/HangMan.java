@@ -16,6 +16,7 @@ public class HangMan implements KeyListener{
 	static JFrame frame = new JFrame();
 	static JPanel panel = new JPanel();
 	static JLabel lives = new JLabel();
+	static JLabel numLetters = new JLabel();
 	public static void main(String[] args) {
 		lives.setText("Lives:");
 		panel.add(lives);
@@ -34,6 +35,12 @@ public class HangMan implements KeyListener{
 	}
 	public HangMan() {
 		frame.addKeyListener(this);
+		JOptionPane.showMessageDialog(null, "Guess letters to guess the word");
+		String text = "";
+		for(int i = 0; i< words.pop().length();i++) {
+			text += "_";
+		}
+		//add numLetters to frame
 	}
 	static void getWords(int numberWords) {
 		for(int i = 0; i<numberWords;i++) {
