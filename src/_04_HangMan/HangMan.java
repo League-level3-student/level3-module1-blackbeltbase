@@ -9,9 +9,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class HangMan implements KeyListener{
+public class HangMan implements KeyListener {
 	static Stack<String> words = new Stack<String>();
- JLabel[] life = new JLabel[5];
+	JLabel[] life = new JLabel[5];
 	static Utilities wordReader;
 	static JFrame frame = new JFrame();
 	static JPanel panel = new JPanel();
@@ -21,13 +21,15 @@ public class HangMan implements KeyListener{
 	String word = "";
 	CharSequence guess;
 	String text = "";
+
 	public static void main(String[] args) {
 		HangMan startup = new HangMan();
 	}
+
 	public HangMan() {
 		lives.setText("Lives:");
 		panel.add(lives);
-		for(int i = 0; i<life.length;i++) {
+		for (int i = 0; i < life.length; i++) {
 			life[i] = new JLabel();
 			life[i].setText("<3");
 			panel.add(life[i]);
@@ -42,67 +44,95 @@ public class HangMan implements KeyListener{
 
 		frame.addKeyListener(this);
 		wordReader = new Utilities();
-			word = words.pop();
-			System.out.println(word);
+		word = words.pop();
+		System.out.println(word);
 		JOptionPane.showMessageDialog(null, "Guess letters to guess the word");
 		text = getWordLength(word);
-		numLetters.setText("Number of Letters: "+text);
-		
-		
+		numLetters.setText("Number of Letters: " + text);
+
 	}
+
 	String getWordLength(String word) {
 		String text = "";
-		for(int i = 0; i< word.length();i++) {
+		for (int i = 0; i < word.length(); i++) {
 			text += "|";
 		}
 		return text;
 	}
-  void getWords(int numberWords) {
-		for(int i = 0; i<numberWords;i++) {
+
+	void getWords(int numberWords) {
+		for (int i = 0; i < numberWords; i++) {
 			words.push(wordReader.readRandomLineFromFile("dictionary.txt"));
 		}
 	}
-  
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 	}
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		String characters = "";
-		 characters += e.getKeyChar();
+		characters += e.getKeyChar();
 		String textHolder = "";
 		guess = characters;
 		int moreLetters = 0;
 		System.out.println(guess);
-		if(word.contains(guess)) {
+		if (word.contains(guess)) {
 			JOptionPane.showMessageDialog(null, "Correct!");
 			System.out.println("correct");
 			System.out.println(e.getKeyChar());
-			for(int i = 0; i<word.length();i++) {
-				if(word.indexOf(e.getKeyChar())+moreLetters ==i) {
+			for (int i = 0; i < word.length(); i++) {
+				if (word.indexOf(e.getKeyChar()) == i || word.lastIndexOf(e.getKeyChar()) == i) {
 					textHolder += e.getKeyChar();
 					System.out.println("letterAdded");
-				}
-				else {
-					textHolder += text.substring(i, i+1);
+				} else {
+					textHolder += text.substring(i, i + 1);
 				}
 				moreLetters++;
 			}
 			text = "";
-		}
-		else {
-			life[life.length-1].remove(life.length-1);;
+		} else {
+			life[life.length - 1].remove(life.length - 1);
+			;
 		}
 		text = textHolder;
-		numLetters.setText("Number of Letters: "+text);
+		numLetters.setText("Number of Letters: " + text);
 		frame.add(panel);
+		if (text.equals(word)) {
+			text = "";
+			JOptionPane.showMessageDialog(null, "Congrats! the correct word was " + word);
+			frame.dispose();
+			lives.setText("Lives:");
+			panel.add(lives);
+			for (int i = 0; i < life.length; i++) {
+				life[i] = new JLabel();
+				life[i].setText("<3");
+				panel.add(life[i]);
+			}
+			panel.add(numLetters);
+			frame.add(panel);
+			frame.setSize(500, 100);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setVisible(true);
+
+			frame.addKeyListener(this);
+			wordReader = new Utilities();
+			word = words.pop();
+			System.out.println(word);
+			JOptionPane.showMessageDialog(null, "Guess letters to guess the word");
+			text = getWordLength(word);
+			numLetters.setText("Number of Letters: " + text);
+		}
+
 	}
+
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 }
